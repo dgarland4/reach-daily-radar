@@ -45,19 +45,29 @@ REGION_ORDER = [
 ]
 
 
+def clean(s):
+    """Strip surrogate characters that cannot be encoded in UTF-8."""
+    if not s:
+        return s
+    try:
+        return s.encode("utf-16", "surrogatepass").decode("utf-16")
+    except Exception:
+        return s.encode("utf-8", "replace").decode("utf-8")
+
+
 def get_prop(page, name, default=""):
     props = page.get("properties", {})
     p = props.get(name, {})
     t = p.get("type", "")
     if t == "title":
         items = p.get("title", [])
-        return items[0]["plain_text"] if items else default
+        return clean(items[0]["plain_text"]) if items else default
     if t == "rich_text":
         items = p.get("rich_text", [])
-        return items[0]["plain_text"] if items else default
+        return clean(items[0]["plain_text"]) if items else default
     if t == "select":
         sel = p.get("select")
-        return sel["name"] if sel else default
+        return clean(sel["name"]) if sel else default
     if t == "url":
         return p.get("url") or default
     if t == "date":
@@ -390,6 +400,6 @@ if __name__ == "__main__":
     html = build_html(companies)
     # Sanitize surrogate characters that can't be encoded in UTF-8
     html = html.encode("utf-8", errors="replace").decode("utf-8")
-    with open("index.html", "w", encoding="utf-8") as f:
+    with open("index.html", "w", encoding="utf-8", errors="replace") as f:
         f.write(html)
     print(f"Done: index.html written ({len(html):,} bytes, {len(companies)} companies)")
