@@ -82,6 +82,25 @@
   .tabs-divider{width:1px;height:22px;background:var(--rule);margin:0 6px;flex-shrink:0}
   .sort-btn{border:1px solid var(--rule) !important;margin-left:2px}
   .sort-btn.sort-active{background:var(--navy) !important;color:var(--white) !important;border-color:var(--navy) !important}
+  /* ── LIST VIEW ── */
+  .view-toggle{display:flex;align-items:center;gap:4px;margin-left:auto;flex-shrink:0}
+  .vtab{padding:5px 11px;border-radius:6px;border:1px solid var(--rule);background:transparent;font-family:'Montserrat',sans-serif;font-size:12px;font-weight:600;color:var(--text-secondary);cursor:pointer;line-height:1;transition:all .15s ease}
+  .vtab.active,.vtab:hover{background:var(--navy);color:var(--white);border-color:var(--navy)}
+  .list-view{display:none;width:100%;border:1px solid var(--rule);border-radius:12px;overflow:hidden;background:var(--white)}
+  .list-view.visible{display:block}
+  .list-header{display:grid;grid-template-columns:36px 2fr 1fr 1fr 1fr 1fr 100px;gap:0;background:var(--navy);padding:0}
+  .list-header-cell{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.55);padding:10px 14px}
+  .list-row{display:grid;grid-template-columns:36px 2fr 1fr 1fr 1fr 1fr 100px;gap:0;border-top:1px solid var(--rule);align-items:center;transition:background .12s ease;animation:fadeUp .3s ease both}
+  .list-row:hover{background:#F0F5FF}
+  .list-row.hidden{display:none}
+  .list-cell{padding:10px 14px;font-size:12px;font-weight:500;color:var(--charcoal);overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+  .list-cell-logo{padding:8px 6px 8px 10px;display:flex;align-items:center;justify-content:center}
+  .list-logo{width:22px;height:22px;object-fit:contain;border-radius:4px}
+  .list-name{font-weight:700;color:var(--navy);font-size:13px}
+  .list-name a{color:var(--reach-blue);text-decoration:none;font-size:11px;font-weight:500;margin-left:7px;opacity:.7}
+  .list-name a:hover{opacity:1;text-decoration:underline}
+  .list-badge{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.04em;padding:2px 7px;border-radius:4px;white-space:nowrap}
+  .list-status{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:10px;display:inline-block}
   @media(max-width:768px){
     .site-header{padding:0 16px}.hero{padding:32px 16px 28px}
     .region-tabs,.main{padding:0 16px}.main{padding:24px 16px 60px}
@@ -127,13 +146,31 @@
   <button class="rtab" onclick="filterCards('PropTech',this)">PropTech</button>
   <div class="tabs-divider"></div>
   <button class="rtab sort-btn" id="sort-btn" onclick="toggleSort(this)">📅 Newest First</button>
+  <div class="tabs-divider"></div>
+  <div class="view-toggle">
+    <button class="vtab active" id="view-card-btn" onclick="setView('card')">⊞ Cards</button>
+    <button class="vtab" id="view-list-btn" onclick="setView('list')">☰ List</button>
+  </div>
 </div>
 <main class="main">
   <div class="section-header">
     <div class="section-title">⚡ All Companies · REACH Daily Radar</div>
     <div class="section-count" id="card-count">Showing 24 of 24</div>
   </div>
-  
+
+  <!-- LIST VIEW -->
+  <div class="list-view" id="list-view">
+    <div class="list-header">
+      <div class="list-header-cell"></div>
+      <div class="list-header-cell">Company</div>
+      <div class="list-header-cell">Category</div>
+      <div class="list-header-cell">Region</div>
+      <div class="list-header-cell">Stage</div>
+      <div class="list-header-cell">Type</div>
+      <div class="list-header-cell">Status</div>
+    </div>
+    <div id="list-rows"></div>
+  </div>
   <div class="section-divider">
     <div class="section-divider-label">🇺🇸 North America</div>
     <div class="section-divider-line"></div>
@@ -954,26 +991,138 @@
 <script>
 let currentFilter = 'all';
 let sortNewest = false;
+let currentView = 'card';
+
+// ── Build list rows from card data on page load ──
+function buildListRows() {
+  const cards = Array.from(document.querySelectorAll('.card'));
+  const container = document.getElementById('list-rows');
+  const statusColors = {
+    'New':'#FFF9C4', 'Researching':'#E3F2FD', 'Contacted':'#FFF3E0',
+    'Pass':'#FFEBEE', 'Portfolio':'#F3E5F5'
+  };
+  const typeColors = {'Core':'#EBF2FF','Adjacent':'#F0FDF4'};
+  const typeText = {'Core':'#1B5BA7','Adjacent':'#166534'};
+
+  container.innerHTML = '';
+  cards.forEach(card => {
+    const tags = card.getAttribute('data-tags') || '';
+    const date = card.getAttribute('data-date') || '';
+    const name = card.querySelector('.card-name')?.textContent || '';
+    const websiteEl = card.querySelector('.card-website');
+    const website = websiteEl?.textContent?.replace('↗ ','') || '';
+    const websiteHref = websiteEl?.href || '#';
+    const logoSrc = card.querySelector('.card-logo')?.src || '';
+    const stage = card.querySelector('.tag')?.textContent || '';
+    const allTags = card.querySelectorAll('.tag');
+    const category = allTags[0]?.textContent || '';
+    const stageFull = allTags[1]?.textContent || '';
+
+    // Extract region, type, status from tags string
+    const tagParts = tags.split(' ');
+    const region = tagParts[0] || '';
+    const type = tagParts[1] || '';
+    const category2 = tagParts[2] || '';
+
+    // Get status from status pill
+    const statusEl = card.querySelector('.status-pill');
+    const status = statusEl?.textContent?.trim() || 'New';
+    const statusBg = statusColors[status] || '#FFF9C4';
+
+    const row = document.createElement('div');
+    row.className = 'list-row';
+    row.setAttribute('data-tags', tags);
+    row.setAttribute('data-date', date);
+    row.innerHTML = `
+      <div class="list-cell list-cell-logo">
+        <img src="${logoSrc}" class="list-logo" alt="${name}" onerror="this.style.display='none'">
+      </div>
+      <div class="list-cell list-name">
+        ${name}
+        <a href="${websiteHref}" target="_blank">↗ ${website}</a>
+      </div>
+      <div class="list-cell">
+        <span class="list-badge" style="background:#F1F5F9;color:#475569">${category2}</span>
+      </div>
+      <div class="list-cell">
+        <span class="list-badge" style="background:#EBF2FF;color:#1B5BA7">${region}</span>
+      </div>
+      <div class="list-cell" style="font-size:11px;color:#6B7A99">${stageFull}</div>
+      <div class="list-cell">
+        <span class="list-badge" style="background:${typeColors[type]||'#F1F5F9'};color:${typeText[type]||'#475569'}">${type}</span>
+      </div>
+      <div class="list-cell">
+        <span class="list-status" style="background:${statusBg};color:#5A4000">${status}</span>
+      </div>`;
+    container.appendChild(row);
+  });
+}
+
+function setView(view) {
+  currentView = view;
+  const cardViewEls = document.querySelectorAll('.section-divider, .cards-grid:not(#sorted-view), #sorted-view');
+  const listView = document.getElementById('list-view');
+
+  document.getElementById('view-card-btn').classList.toggle('active', view === 'card');
+  document.getElementById('view-list-btn').classList.toggle('active', view === 'list');
+
+  if (view === 'list') {
+    buildListRows();
+    listView.classList.add('visible');
+    cardViewEls.forEach(el => el.style.display = 'none');
+    // Apply current filter to list rows
+    applyListFilter();
+  } else {
+    listView.classList.remove('visible');
+    applyFilterAndSort();
+  }
+}
+
+function applyListFilter() {
+  const rows = document.querySelectorAll('#list-rows .list-row');
+  let visible = 0;
+  rows.forEach(row => {
+    const tags = row.getAttribute('data-tags') || '';
+    const show = currentFilter === 'all' || tags.includes(currentFilter);
+    row.classList.toggle('hidden', !show);
+    if (show) visible++;
+  });
+  // Sort if needed
+  if (sortNewest) {
+    const container = document.getElementById('list-rows');
+    const rowArr = Array.from(rows).filter(r => !r.classList.contains('hidden'));
+    rowArr.sort((a,b) => (b.getAttribute('data-date')||'').localeCompare(a.getAttribute('data-date')||''));
+    rowArr.forEach(r => container.appendChild(r));
+  }
+  document.getElementById('card-count').textContent = 'Showing ' + visible + ' of ' + rows.length;
+}
 
 function filterCards(tag, btn) {
   currentFilter = tag;
   document.querySelectorAll('.rtab:not(.sort-btn)').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
-  applyFilterAndSort();
+  if (currentView === 'list') {
+    applyListFilter();
+  } else {
+    applyFilterAndSort();
+  }
 }
 
 function toggleSort(btn) {
   sortNewest = !sortNewest;
   btn.classList.toggle('sort-active', sortNewest);
   btn.textContent = sortNewest ? '📅 Newest First ✓' : '📅 Newest First';
-  applyFilterAndSort();
+  if (currentView === 'list') {
+    applyListFilter();
+  } else {
+    applyFilterAndSort();
+  }
 }
 
 function applyFilterAndSort() {
   const main = document.querySelector('.main');
   const allCards = Array.from(document.querySelectorAll('.card'));
 
-  // Filter visibility
   let visible = 0;
   allCards.forEach(card => {
     const tags = card.getAttribute('data-tags') || '';
@@ -983,15 +1132,13 @@ function applyFilterAndSort() {
   });
   document.getElementById('card-count').textContent = 'Showing ' + visible + ' of ' + allCards.length;
 
-  // Sort: gather all visible cards, detach, re-insert sorted
   if (sortNewest) {
     const visibleCards = allCards.filter(c => c.style.display !== 'none');
     visibleCards.sort((a, b) => {
       const da = a.getAttribute('data-date') || '2000-01-01';
       const db = b.getAttribute('data-date') || '2000-01-01';
-      return db.localeCompare(da); // newest first
+      return db.localeCompare(da);
     });
-    // Create a flat sorted container
     let sortedWrap = document.getElementById('sorted-view');
     if (!sortedWrap) {
       sortedWrap = document.createElement('div');
@@ -1001,18 +1148,14 @@ function applyFilterAndSort() {
     }
     sortedWrap.innerHTML = '';
     visibleCards.forEach(c => sortedWrap.appendChild(c.cloneNode(true)));
-
-    // Hide region sections, show sorted view
     document.querySelectorAll('.section-divider, .cards-grid:not(#sorted-view)').forEach(el => el.style.display = 'none');
     const existing = document.getElementById('sorted-view');
     if (existing) existing.remove();
     main.appendChild(sortedWrap);
   } else {
-    // Restore original region sections
     const sortedWrap = document.getElementById('sorted-view');
     if (sortedWrap) sortedWrap.remove();
     document.querySelectorAll('.section-divider, .cards-grid').forEach(el => el.style.display = '');
-    // Re-apply filter visibility
     allCards.forEach(card => {
       const tags = card.getAttribute('data-tags') || '';
       const show = currentFilter === 'all' || tags.includes(currentFilter);
