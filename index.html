@@ -79,6 +79,9 @@
   .site-footer{background:var(--navy);padding:20px 48px;display:flex;align-items:center;justify-content:space-between}
   .footer-tagline{font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.35)}
   .footer-brand{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.25)}
+  .tabs-divider{width:1px;height:22px;background:var(--rule);margin:0 6px;flex-shrink:0}
+  .sort-btn{border:1px solid var(--rule) !important;margin-left:2px}
+  .sort-btn.sort-active{background:var(--navy) !important;color:var(--white) !important;border-color:var(--navy) !important}
   @media(max-width:768px){
     .site-header{padding:0 16px}.hero{padding:32px 16px 28px}
     .region-tabs,.main{padding:0 16px}.main{padding:24px 16px 60px}
@@ -122,6 +125,8 @@
   <button class="rtab" onclick="filterCards('AI',this)">AI</button>
   <button class="rtab" onclick="filterCards('FinTech',this)">FinTech</button>
   <button class="rtab" onclick="filterCards('PropTech',this)">PropTech</button>
+  <div class="tabs-divider"></div>
+  <button class="rtab sort-btn" id="sort-btn" onclick="toggleSort(this)">📅 Newest First</button>
 </div>
 <main class="main">
   <div class="section-header">
@@ -134,7 +139,7 @@
     <div class="section-divider-line"></div>
   </div>
   <div class="cards-grid">
-    <div class="card" data-tags="US FinTech Core">
+    <div class="card" data-tags="US FinTech Core" data-date="2026-03-15">
       <div class="card-top">
         <div class="card-logo-wrap"><img src="https://logo.clearbit.com/goldbridge.com" class="card-logo" alt="Goldbridge logo" onerror="this.style.display='none'"></div>
         <div class="card-identity">
@@ -167,7 +172,7 @@
       </div>
     </div>
 
-    <div class="card" data-tags="US IoT Core">
+    <div class="card" data-tags="US IoT Core" data-date="2026-03-15">
       <div class="card-top">
         <div class="card-logo-wrap"><img src="https://logo.clearbit.com/inviscid.ai" class="card-logo" alt="Inviscid AI logo" onerror="this.style.display='none'"></div>
         <div class="card-identity">
@@ -200,7 +205,7 @@
       </div>
     </div>
 
-    <div class="card" data-tags="US AI Core">
+    <div class="card" data-tags="US AI Core" data-date="2026-03-15">
       <div class="card-top">
         <div class="card-logo-wrap"><img src="https://logo.clearbit.com/tidalwave.ai" class="card-logo" alt="Tidalwave logo" onerror="this.style.display='none'"></div>
         <div class="card-identity">
@@ -233,7 +238,7 @@
       </div>
     </div>
 
-    <div class="card" data-tags="US AI Core">
+    <div class="card" data-tags="US AI Core" data-date="2026-03-15">
       <div class="card-top">
         <div class="card-logo-wrap"><img src="https://logo.clearbit.com/ridley.ai" class="card-logo" alt="Ridley logo" onerror="this.style.display='none'"></div>
         <div class="card-identity">
@@ -266,7 +271,7 @@
       </div>
     </div>
 
-    <div class="card" data-tags="US AI Core">
+    <div class="card" data-tags="US AI Core" data-date="2026-03-15">
       <div class="card-top">
         <div class="card-logo-wrap"><img src="https://logo.clearbit.com/flexdesk.io" class="card-logo" alt="FlexDesk logo" onerror="this.style.display='none'"></div>
         <div class="card-identity">
@@ -299,7 +304,7 @@
       </div>
     </div>
 
-    <div class="card" data-tags="US AI Core">
+    <div class="card" data-tags="US AI Core" data-date="2026-03-15">
       <div class="card-top">
         <div class="card-logo-wrap"><img src="https://logo.clearbit.com/applydesign.com" class="card-logo" alt="Apply Design logo" onerror="this.style.display='none'"></div>
         <div class="card-identity">
@@ -332,7 +337,7 @@
       </div>
     </div>
 
-    <div class="card" data-tags="US FinTech Core">
+    <div class="card" data-tags="US FinTech Core" data-date="2026-03-15">
       <div class="card-top">
         <div class="card-logo-wrap"><img src="https://logo.clearbit.com/whale.re" class="card-logo" alt="Whale logo" onerror="this.style.display='none'"></div>
         <div class="card-identity">
@@ -365,7 +370,7 @@
       </div>
     </div>
 
-    <div class="card" data-tags="US AI Core">
+    <div class="card" data-tags="US AI Core" data-date="2026-03-15">
       <div class="card-top">
         <div class="card-logo-wrap"><img src="https://logo.clearbit.com/luxurypresence.com" class="card-logo" alt="Luxury Presence logo" onerror="this.style.display='none'"></div>
         <div class="card-identity">
@@ -398,7 +403,7 @@
       </div>
     </div>
 
-    <div class="card" data-tags="US AI Core">
+    <div class="card" data-tags="US AI Core" data-date="2026-03-15">
       <div class="card-top">
         <div class="card-logo-wrap"><img src="https://logo.clearbit.com/breezy.ai" class="card-logo" alt="Breezy logo" onerror="this.style.display='none'"></div>
         <div class="card-identity">
@@ -431,7 +436,7 @@
       </div>
     </div>
 
-    <div class="card" data-tags="US ESG / ClimaTech Core">
+    <div class="card" data-tags="US ESG / ClimaTech Core" data-date="2026-03-15">
       <div class="card-top">
         <div class="card-logo-wrap"><img src="https://logo.clearbit.com/pearlscore.com" class="card-logo" alt="Pearl logo" onerror="this.style.display='none'"></div>
         <div class="card-identity">
@@ -464,7 +469,7 @@
       </div>
     </div>
 
-    <div class="card" data-tags="US Data & Analytics Core">
+    <div class="card" data-tags="US Data & Analytics Core" data-date="2026-03-15">
       <div class="card-top">
         <div class="card-logo-wrap"><img src="https://logo.clearbit.com/propexo.com" class="card-logo" alt="Propexo logo" onerror="this.style.display='none'"></div>
         <div class="card-identity">
@@ -497,7 +502,7 @@
       </div>
     </div>
 
-    <div class="card" data-tags="US Construction Tech Core">
+    <div class="card" data-tags="US Construction Tech Core" data-date="2026-03-15">
       <div class="card-top">
         <div class="card-logo-wrap"><img src="https://logo.clearbit.com/structuredai.com" class="card-logo" alt="Structured AI logo" onerror="this.style.display='none'"></div>
         <div class="card-identity">
@@ -530,7 +535,7 @@
       </div>
     </div>
 
-    <div class="card" data-tags="US AI Core">
+    <div class="card" data-tags="US AI Core" data-date="2026-03-15">
       <div class="card-top">
         <div class="card-logo-wrap"><img src="https://logo.clearbit.com/infinityy.com" class="card-logo" alt="Infinityy logo" onerror="this.style.display='none'"></div>
         <div class="card-identity">
@@ -567,7 +572,7 @@
     <div class="section-divider-line"></div>
   </div>
   <div class="cards-grid">
-    <div class="card" data-tags="LatAm PropTech Core">
+    <div class="card" data-tags="LatAm PropTech Core" data-date="2026-03-15">
       <div class="card-top">
         <div class="card-logo-wrap"><img src="https://logo.clearbit.com/habi.co" class="card-logo" alt="Habi logo" onerror="this.style.display='none'"></div>
         <div class="card-identity">
@@ -600,7 +605,7 @@
       </div>
     </div>
 
-    <div class="card" data-tags="LatAm FinTech Core">
+    <div class="card" data-tags="LatAm FinTech Core" data-date="2026-03-15">
       <div class="card-top">
         <div class="card-logo-wrap"><img src="https://logo.clearbit.com/credaluga.com.br" class="card-logo" alt="CredAluga logo" onerror="this.style.display='none'"></div>
         <div class="card-identity">
@@ -633,7 +638,7 @@
       </div>
     </div>
 
-    <div class="card" data-tags="LatAm PropTech Core">
+    <div class="card" data-tags="LatAm PropTech Core" data-date="2026-03-15">
       <div class="card-top">
         <div class="card-logo-wrap"><img src="https://logo.clearbit.com/spot2.mx" class="card-logo" alt="Spot2 logo" onerror="this.style.display='none'"></div>
         <div class="card-identity">
@@ -666,7 +671,7 @@
       </div>
     </div>
 
-    <div class="card" data-tags="LatAm Construction Tech Adjacent">
+    <div class="card" data-tags="LatAm Construction Tech Adjacent" data-date="2026-03-15">
       <div class="card-top">
         <div class="card-logo-wrap"><img src="https://logo.clearbit.com/construex.com" class="card-logo" alt="Construex logo" onerror="this.style.display='none'"></div>
         <div class="card-identity">
@@ -703,7 +708,7 @@
     <div class="section-divider-line"></div>
   </div>
   <div class="cards-grid">
-    <div class="card" data-tags="Europe AI Core">
+    <div class="card" data-tags="Europe AI Core" data-date="2026-03-15">
       <div class="card-top">
         <div class="card-logo-wrap"><img src="https://logo.clearbit.com/smartbricks.ai" class="card-logo" alt="Smart Bricks logo" onerror="this.style.display='none'"></div>
         <div class="card-identity">
@@ -736,7 +741,7 @@
       </div>
     </div>
 
-    <div class="card" data-tags="Europe IoT Core">
+    <div class="card" data-tags="Europe IoT Core" data-date="2026-03-15">
       <div class="card-top">
         <div class="card-logo-wrap"><img src="https://logo.clearbit.com/tewke.com" class="card-logo" alt="Tewke logo" onerror="this.style.display='none'"></div>
         <div class="card-identity">
@@ -773,7 +778,7 @@
     <div class="section-divider-line"></div>
   </div>
   <div class="cards-grid">
-    <div class="card" data-tags="MENA PropTech Core">
+    <div class="card" data-tags="MENA PropTech Core" data-date="2026-03-15">
       <div class="card-top">
         <div class="card-logo-wrap"><img src="https://logo.clearbit.com/huspy.com" class="card-logo" alt="Huspy logo" onerror="this.style.display='none'"></div>
         <div class="card-identity">
@@ -806,7 +811,7 @@
       </div>
     </div>
 
-    <div class="card" data-tags="MENA FinTech Core">
+    <div class="card" data-tags="MENA FinTech Core" data-date="2026-03-15">
       <div class="card-top">
         <div class="card-logo-wrap"><img src="https://logo.clearbit.com/keyper.ae" class="card-logo" alt="Keyper logo" onerror="this.style.display='none'"></div>
         <div class="card-identity">
@@ -839,7 +844,7 @@
       </div>
     </div>
 
-    <div class="card" data-tags="MENA AI Core">
+    <div class="card" data-tags="MENA AI Core" data-date="2026-03-15">
       <div class="card-top">
         <div class="card-logo-wrap"><img src="https://logo.clearbit.com/prop-ai.com" class="card-logo" alt="Prop-AI logo" onerror="this.style.display='none'"></div>
         <div class="card-identity">
@@ -872,7 +877,7 @@
       </div>
     </div>
 
-    <div class="card" data-tags="MENA PropTech Core">
+    <div class="card" data-tags="MENA PropTech Core" data-date="2026-03-15">
       <div class="card-top">
         <div class="card-logo-wrap"><img src="https://logo.clearbit.com/viewit.ae" class="card-logo" alt="Viewit logo" onerror="this.style.display='none'"></div>
         <div class="card-identity">
@@ -909,7 +914,7 @@
     <div class="section-divider-line"></div>
   </div>
   <div class="cards-grid">
-    <div class="card" data-tags="APAC PropTech Core">
+    <div class="card" data-tags="APAC PropTech Core" data-date="2026-03-15">
       <div class="card-top">
         <div class="card-logo-wrap"><img src="https://logo.clearbit.com/landeed.com" class="card-logo" alt="Landeed logo" onerror="this.style.display='none'"></div>
         <div class="card-identity">
@@ -947,18 +952,73 @@
   <div class="footer-brand">REACH · Second Century Ventures · © 2026</div>
 </footer>
 <script>
+let currentFilter = 'all';
+let sortNewest = false;
+
 function filterCards(tag, btn) {
-  document.querySelectorAll('.rtab').forEach(b => b.classList.remove('active'));
+  currentFilter = tag;
+  document.querySelectorAll('.rtab:not(.sort-btn)').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
-  const cards = document.querySelectorAll('.card');
+  applyFilterAndSort();
+}
+
+function toggleSort(btn) {
+  sortNewest = !sortNewest;
+  btn.classList.toggle('sort-active', sortNewest);
+  btn.textContent = sortNewest ? '📅 Newest First ✓' : '📅 Newest First';
+  applyFilterAndSort();
+}
+
+function applyFilterAndSort() {
+  const main = document.querySelector('.main');
+  const allCards = Array.from(document.querySelectorAll('.card'));
+
+  // Filter visibility
   let visible = 0;
-  cards.forEach(card => {
+  allCards.forEach(card => {
     const tags = card.getAttribute('data-tags') || '';
-    const show = tag === 'all' || tags.includes(tag);
+    const show = currentFilter === 'all' || tags.includes(currentFilter);
     card.style.display = show ? 'flex' : 'none';
     if (show) visible++;
   });
-  document.getElementById('card-count').textContent = 'Showing ' + visible + ' of ' + cards.length;
+  document.getElementById('card-count').textContent = 'Showing ' + visible + ' of ' + allCards.length;
+
+  // Sort: gather all visible cards, detach, re-insert sorted
+  if (sortNewest) {
+    const visibleCards = allCards.filter(c => c.style.display !== 'none');
+    visibleCards.sort((a, b) => {
+      const da = a.getAttribute('data-date') || '2000-01-01';
+      const db = b.getAttribute('data-date') || '2000-01-01';
+      return db.localeCompare(da); // newest first
+    });
+    // Create a flat sorted container
+    let sortedWrap = document.getElementById('sorted-view');
+    if (!sortedWrap) {
+      sortedWrap = document.createElement('div');
+      sortedWrap.id = 'sorted-view';
+      sortedWrap.className = 'cards-grid';
+      sortedWrap.style.marginTop = '20px';
+    }
+    sortedWrap.innerHTML = '';
+    visibleCards.forEach(c => sortedWrap.appendChild(c.cloneNode(true)));
+
+    // Hide region sections, show sorted view
+    document.querySelectorAll('.section-divider, .cards-grid:not(#sorted-view)').forEach(el => el.style.display = 'none');
+    const existing = document.getElementById('sorted-view');
+    if (existing) existing.remove();
+    main.appendChild(sortedWrap);
+  } else {
+    // Restore original region sections
+    const sortedWrap = document.getElementById('sorted-view');
+    if (sortedWrap) sortedWrap.remove();
+    document.querySelectorAll('.section-divider, .cards-grid').forEach(el => el.style.display = '');
+    // Re-apply filter visibility
+    allCards.forEach(card => {
+      const tags = card.getAttribute('data-tags') || '';
+      const show = currentFilter === 'all' || tags.includes(currentFilter);
+      card.style.display = show ? 'flex' : 'none';
+    });
+  }
 }
 </script>
 </body>
