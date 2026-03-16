@@ -388,6 +388,8 @@ if __name__ == "__main__":
     companies = fetch_all_companies()
     print(f"Fetched {len(companies)} companies")
     html = build_html(companies)
+    # Sanitize surrogate characters that can't be encoded in UTF-8
+    html = html.encode("utf-8", errors="replace").decode("utf-8")
     with open("index.html", "w", encoding="utf-8") as f:
         f.write(html)
     print(f"Done: index.html written ({len(html):,} bytes, {len(companies)} companies)")
