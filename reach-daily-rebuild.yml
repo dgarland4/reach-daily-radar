@@ -1,11 +1,13 @@
 name: REACH Daily Radar — Rebuild & Deploy
 
 on:
+  schedule:
+    - cron: '0 14 * * 1-5'  # 7am PST Mon-Fri
   workflow_dispatch:
     inputs:
       date:
         description: 'Date label (e.g. March 16, 2026)'
-        required: true
+        required: false
         default: ''
       commit_message:
         description: 'Commit message'
