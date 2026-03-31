@@ -3,7 +3,7 @@ import os, requests
 from datetime import datetime
 
 NOTION_TOKEN = os.environ.get("NOTION_TOKEN", "")
-DATE_LABEL = os.environ.get("DATE_LABEL", datetime.now().strftime("%B %-d, %Y"))
+DATE_LABEL = os.environ.get("DATE_LABEL") or datetime.now().strftime("%B %-d, %Y")
 DATABASE_ID = "135c09f5319d41bfa9a92089ee4ac5e6"
 TODAY = datetime.now().strftime("%Y-%m-%d")
 
