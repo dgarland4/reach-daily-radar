@@ -1,0 +1,420 @@
+{
+  "version": "1.0",
+  "generated": "2026-03-30",
+  "total_companies": 77,
+  "baseline": [
+    {
+      "name": "Inviscid AI",
+      "website": "https://inviscid.ai",
+      "normalized_name": "inviscidai",
+      "normalized_domain": "inviscid"
+    },
+    {
+      "name": "FlexDesk",
+      "website": "https://flexdesk.io",
+      "normalized_name": "flexdesk",
+      "normalized_domain": "flexdesk"
+    },
+    {
+      "name": "CredAluga",
+      "website": "https://credaluga.com.br",
+      "normalized_name": "credaluga",
+      "normalized_domain": "credaluga"
+    },
+    {
+      "name": "Spot2",
+      "website": "https://spot2.mx",
+      "normalized_name": "spot2",
+      "normalized_domain": "spot2"
+    },
+    {
+      "name": "Huspy",
+      "website": "https://huspy.com",
+      "normalized_name": "huspy",
+      "normalized_domain": "huspy"
+    },
+    {
+      "name": "Habi",
+      "website": "https://habi.co",
+      "normalized_name": "habi",
+      "normalized_domain": "habi"
+    },
+    {
+      "name": "Ridley",
+      "website": "https://ridley.ai",
+      "normalized_name": "ridley",
+      "normalized_domain": "ridley"
+    },
+    {
+      "name": "Apply Design",
+      "website": "https://applydesign.com",
+      "normalized_name": "applydesign",
+      "normalized_domain": "applydesign"
+    },
+    {
+      "name": "Prop-AI",
+      "website": "https://prop-ai.com",
+      "normalized_name": "propai",
+      "normalized_domain": "propai"
+    },
+    {
+      "name": "Goldbridge",
+      "website": "https://goldbridge.com",
+      "normalized_name": "goldbridge",
+      "normalized_domain": "goldbridge"
+    },
+    {
+      "name": "Keyper",
+      "website": "https://keyper.ae",
+      "normalized_name": "keyper",
+      "normalized_domain": "keyper"
+    },
+    {
+      "name": "Tewke",
+      "website": "https://tewke.com",
+      "normalized_name": "tewke",
+      "normalized_domain": "tewke"
+    },
+    {
+      "name": "Landeed",
+      "website": "https://landeed.com",
+      "normalized_name": "landeed",
+      "normalized_domain": "landeed"
+    },
+    {
+      "name": "Tidalwave",
+      "website": "https://tidalwave.ai",
+      "normalized_name": "tidalwave",
+      "normalized_domain": "tidalwave"
+    },
+    {
+      "name": "Construex",
+      "website": "https://construex.com",
+      "normalized_name": "construex",
+      "normalized_domain": "construex"
+    },
+    {
+      "name": "Luxury Presence",
+      "website": "https://luxurypresence.com",
+      "normalized_name": "luxurypresence",
+      "normalized_domain": "luxurypresence"
+    },
+    {
+      "name": "Smart Bricks",
+      "website": "https://smartbricks.com",
+      "normalized_name": "smartbricks",
+      "normalized_domain": "smartbricks"
+    },
+    {
+      "name": "Aldara",
+      "website": "https://aldara.ai",
+      "normalized_name": "aldara",
+      "normalized_domain": "aldara"
+    },
+    {
+      "name": "Propexo",
+      "website": "https://propexo.com",
+      "normalized_name": "propexo",
+      "normalized_domain": "propexo"
+    },
+    {
+      "name": "Propaya",
+      "website": "https://propaya.com",
+      "normalized_name": "propaya",
+      "normalized_domain": "propaya"
+    },
+    {
+      "name": "Scout Out",
+      "website": "https://scoutout.com",
+      "normalized_name": "scoutout",
+      "normalized_domain": "scoutout"
+    },
+    {
+      "name": "Wayline",
+      "website": "https://wayline.io",
+      "normalized_name": "wayline",
+      "normalized_domain": "wayline"
+    },
+    {
+      "name": "PARES",
+      "website": "https://pares.ai",
+      "normalized_name": "pares",
+      "normalized_domain": "pares"
+    },
+    {
+      "name": "ArchiLabs",
+      "website": "https://archilabs.ai",
+      "normalized_name": "archilabs",
+      "normalized_domain": "archilabs"
+    },
+    {
+      "name": "Structured AI",
+      "website": "https://structuredai.com",
+      "normalized_name": "structuredai",
+      "normalized_domain": "structuredai"
+    },
+    {
+      "name": "Automax.ai",
+      "website": "https://automax.ai",
+      "normalized_name": "automax",
+      "normalized_domain": "automax"
+    },
+    {
+      "name": "Assembly HOA",
+      "website": "https://assemblyhoa.com",
+      "normalized_name": "assemblyhoa",
+      "normalized_domain": "assemblyhoa"
+    },
+    {
+      "name": "Homeflow",
+      "website": "https://homeflow.com",
+      "normalized_name": "homeflow",
+      "normalized_domain": "homeflow"
+    },
+    {
+      "name": "Henry",
+      "website": "https://henry.com",
+      "normalized_name": "henry",
+      "normalized_domain": "henry"
+    },
+    {
+      "name": "Haven",
+      "website": "https://haven.com",
+      "normalized_name": "haven",
+      "normalized_domain": "haven"
+    },
+    {
+      "name": "HOMLI",
+      "website": "https://homli.com",
+      "normalized_name": "homli",
+      "normalized_domain": "homli"
+    },
+    {
+      "name": "Homebase",
+      "website": "https://homebase.com",
+      "normalized_name": "homebase",
+      "normalized_domain": "homebase"
+    },
+    {
+      "name": "Snapdocs",
+      "website": "https://snapdocs.com",
+      "normalized_name": "snapdocs",
+      "normalized_domain": "snapdocs"
+    },
+    {
+      "name": "Jeeva AI",
+      "website": "https://jeevai.com",
+      "normalized_name": "jeevaai",
+      "normalized_domain": "jeeva"
+    },
+    {
+      "name": "Arch",
+      "website": "https://arch.io",
+      "normalized_name": "arch",
+      "normalized_domain": "arch"
+    },
+    {
+      "name": "GreenLite",
+      "website": "https://greenlite.com",
+      "normalized_name": "greenlite",
+      "normalized_domain": "greenlite"
+    },
+    {
+      "name": "Zown",
+      "website": "https://zown.ai",
+      "normalized_name": "zown",
+      "normalized_domain": "zown"
+    },
+    {
+      "name": "Tandem",
+      "website": "https://tandem.re",
+      "normalized_name": "tandem",
+      "normalized_domain": "tandem"
+    },
+    {
+      "name": "SchemeFlow",
+      "website": "https://schemeflow.com",
+      "normalized_name": "schemeflow",
+      "normalized_domain": "schemeflow"
+    },
+    {
+      "name": "Brickwise",
+      "website": "https://www.brickwise.at",
+      "normalized_name": "brickwise",
+      "normalized_domain": "brickwise"
+    },
+    {
+      "name": "Foundation",
+      "website": "https://foundation.re",
+      "normalized_name": "foundation",
+      "normalized_domain": "foundation"
+    },
+    {
+      "name": "EliseAI",
+      "website": "https://eliseai.com",
+      "normalized_name": "eliseai",
+      "normalized_domain": "eliseai"
+    },
+    {
+      "name": "Baselane",
+      "website": "https://baselane.com",
+      "normalized_name": "baselane",
+      "normalized_domain": "baselane"
+    },
+    {
+      "name": "Breezy",
+      "website": "https://breezy.ai",
+      "normalized_name": "breezy",
+      "normalized_domain": "breezy"
+    },
+    {
+      "name": "Viewit",
+      "website": "https://viewit.ai",
+      "normalized_name": "viewit",
+      "normalized_domain": "viewit"
+    },
+    {
+      "name": "Banner",
+      "website": "https://banner.ai",
+      "normalized_name": "banner",
+      "normalized_domain": "banner"
+    },
+    {
+      "name": "Material Depot",
+      "website": "https://www.materialdepot.in",
+      "normalized_name": "materialdepot",
+      "normalized_domain": "materialdepot"
+    },
+    {
+      "name": "Avery",
+      "website": "https://avery.io",
+      "normalized_name": "avery",
+      "normalized_domain": "avery"
+    },
+    {
+      "name": "Spacial AI",
+      "website": "https://www.spacial.ai",
+      "normalized_name": "spacialai",
+      "normalized_domain": "spacial"
+    },
+    {
+      "name": "Atlas",
+      "website": "https://www.atlasre.ai",
+      "normalized_name": "atlas",
+      "normalized_domain": "atlas"
+    },
+    {
+      "name": "Bild AI",
+      "website": "https://www.bildai.com",
+      "normalized_name": "bildai",
+      "normalized_domain": "bildai"
+    },
+    {
+      "name": "Diald AI",
+      "website": "https://dialdai.com",
+      "normalized_name": "dialdai",
+      "normalized_domain": "dialdai"
+    },
+    {
+      "name": "Trayd",
+      "website": "https://www.trayd.com",
+      "normalized_name": "trayd",
+      "normalized_domain": "trayd"
+    },
+    {
+      "name": "Kiavi",
+      "website": "https://www.kiavi.com",
+      "normalized_name": "kiavi",
+      "normalized_domain": "kiavi"
+    },
+    {
+      "name": "Ren Systems",
+      "website": "https://www.rensystems.com",
+      "normalized_name": "rensystems",
+      "normalized_domain": "rensystems"
+    },
+    {
+      "name": "Homebound",
+      "website": "https://www.homebound.com",
+      "normalized_name": "homebound",
+      "normalized_domain": "homebound"
+    },
+    {
+      "name": "Vantaca",
+      "website": "https://www.vantaca.com",
+      "normalized_name": "vantaca",
+      "normalized_domain": "vantaca"
+    },
+    {
+      "name": "MeltPlan",
+      "website": "https://www.meltplan.com",
+      "normalized_name": "meltplan",
+      "normalized_domain": "meltplan"
+    },
+    {
+      "name": "Spintly",
+      "website": "https://www.spintly.com",
+      "normalized_name": "spintly",
+      "normalized_domain": "spintly"
+    },
+    {
+      "name": "Stately",
+      "website": "https://www.stately.ai",
+      "normalized_name": "stately",
+      "normalized_domain": "stately"
+    },
+    {
+      "name": "Whale",
+      "website": "https://whale.re",
+      "normalized_name": "whale",
+      "normalized_domain": "whale"
+    }
+  ],
+  "portfolio_exclusions": {
+    "reach_residential_2013": ["bombbomb", "lumentus", "planwise", "reach150social", "treater", "updater", "workface"],
+    "reach_residential_2014": ["backatyoumedia", "deductr", "desktime", "fundwell", "goby", "sendhub", "smartzip", "wevideo"],
+    "reach_residential_2015": ["assetavenue", "august", "boostup", "guardllama", "loopandtie", "notarycam", "pro", "termscout"],
+    "reach_residential_2016": ["sindeo", "truststamp", "flipt", "valoancaptain", "energydatametrics", "homeselfe", "realscout", "floorplanonline", "homediary", "zenergyst"],
+    "reach_residential_2017": ["centriq", "housecanary", "immoviewer", "notarize", "occly", "pearlcertification", "relola", "trustedmail", "adwerx"],
+    "reach_residential_2018": ["activepipe", "boxbrownie", "connectnow", "glide", "hurdlr", "quigler", "realkey", "zavvie"],
+    "reach_residential_2019": ["amarki", "curbio", "evocalize", "kleard", "propy", "ratemyagent", "reconsortia", "sdninc"],
+    "reach_commercial_2019": ["coeo", "lulafit", "cresimple", "biproxi", "trove", "twofold"],
+    "reach_residential_2020": ["kangaroo", "ylopo", "earnnest", "punchlist", "modus", "realx", "transactly", "cartofront"],
+    "reach_commercial_2020": ["dealius", "dealiuscapital", "epr2", "leasera", "obierisk", "occupier", "pearchef", "realtimerisksolutions"],
+    "reach_global_2020_australia": ["igloohome", "uxtrata", "pam", "sorted", "really", "ubipark"],
+    "reach_global_2020_canada": ["brokerassist", "clik", "clikaiai", "parkbench", "setter", "keyliving", "locallogic", "honestdoor", "rentmoola"],
+    "reach_residential_2021": ["aryeo", "feather", "knock", "landis", "milestones", "plunk", "k4connect", "super"],
+    "reach_commercial_2021": ["cove", "groundbreaker", "landintelligence", "lexmarkets", "otso", "parafin", "prodeal", "remarkably", "valcre"],
+    "reach_global_2021_australia": ["boompower", "buildapps", "appwell", "openn", "propic", "soho", "archix", "superdraft"],
+    "reach_global_2021_uk": ["mayordomo", "myroffice", "radweb", "inventorybase", "underthedoormat", "hammock", "sprift", "offr"],
+    "reach_residential_2022": ["courted", "fractional", "inspectify", "leadpops", "perchwell", "place", "reggora", "revive"],
+    "reach_commercial_2022": ["cretelligent", "matrixrentalsolutions", "arxcity", "stratafolio", "bline", "leaseup", "spackle", "stake", "whoseyourlandlord"],
+    "reach_global_2022_australia": ["realestatedoc", "homelive", "futurerent", "hipla", "roomme", "settleeasy", "clairco"],
+    "reach_global_2022_canada": ["urbanimmersive", "loft47", "perch", "smartalto", "rise", "roomvu", "rentalbeast", "openn", "opennegotiation", "watrix", "simplicity"],
+    "reach_global_2022_uk": ["houzen", "safe2", "searchsmartly", "edozo", "mokki", "blockdox", "cleverly", "propertydealsinsight", "monspire", "residently", "fyma"],
+    "reach_residential_2023": ["flock", "highnote", "plusplatform", "prisidio", "realgrader", "summer", "tongo"],
+    "reach_commercial_2023": ["apmhelp", "bluestreakiot", "dwellwellanalytics", "fortress", "fyma", "rockport", "workandmother"],
+    "reach_global_2023_australia": ["marketbuy", "liz", "norx", "properti", "sensorglobal", "realtimeconveyancer", "quantproperty", "listassist", "tapi"],
+    "reach_global_2023_canada": ["productivecall", "sustainablepg", "frontrunner", "iguard", "singlekey", "soulrooms"],
+    "reach_global_2023_latam": ["koggi", "alohome", "propmeteus", "kippstorage", "ambana", "beleta", "ai360", "kolonus"],
+    "reach_global_2023_uk": ["grandbequest", "hococo", "tweaq", "verv", "crowd2live", "bisly", "goyuno"],
+    "reach_residential_2024": ["chirpyest", "finaloffer", "kukun", "notable", "purlin", "scout", "trackxi", "unlock"],
+    "reach_commercial_2024": ["acretrader", "incentifind", "infinityy", "premisehq", "prophia", "rensair", "withco"],
+    "reach_global_2024_australia": ["arcanite", "erinliving", "milkchocolate", "leesy", "flkitover", "agentprofitplanner", "squarebysquare", "gxe", "thdr"],
+    "reach_global_2024_canada": ["collegium", "proptexx", "propra", "maket", "infinitecreator", "proximahq", "iluminai"],
+    "reach_global_2024_israel": ["lendai", "buzzztech", "centeraya", "leancon", "accuraiser", "reli", "mytower", "arkdesignai"],
+    "reach_global_2024_latam": ["alterhome", "cuid", "hippobuild", "mica", "neo", "propi", "viventa", "wbuild"],
+    "reach_global_2024_uk": ["susyhouse", "hipla", "buildingpassport", "jmi", "builtapi", "zonifero", "propalt", "infersens"],
+    "reach_residential_2025": ["pitch59", "foyer", "guesthouse", "infinityy", "neo", "pixlmob", "theqwikfix", "tether"],
+    "reach_commercial_2025": ["1031specialists", "breatheev", "caltana", "connexus", "forty5park", "packsmith", "predictap", "rekalibrate", "verv"],
+    "reach_global_2025_australia": ["unio", "propertycredit", "scaleapp", "handl", "aivot", "foundat"],
+    "reach_global_2025_canada": ["releaserent", "upfront", "stelor", "voiceflip", "reitium", "bidmii", "sharesfr", "rocketplan"],
+    "reach_global_2025_israel": ["homemade", "smarthoist", "housetable", "elphi", "robochute", "boomrealestch", "villatracker", "atom"],
+    "reach_global_2025_latam": ["crezes", "alpaca", "omnimls", "passwork", "gohaus", "docublock", "polibit", "propio"],
+    "reach_global_2025_uk": ["carrot", "prospectorpro", "watergate", "squareplan", "casapay", "hybr", "factored", "husmus"],
+    "reach_global_2026_australia": ["parkbooker", "crayons", "recrutre", "zapiio", "arosoftware"],
+    "reach_global_2026_canada": ["repliers", "cedar", "neobanc", "credivera"],
+    "reach_global_2026_middle_east": ["asano", "rewa", "watad", "fixit", "coraly", "holox", "takeem"],
+    "scv_focus": ["secondcenturyventures", "scv"]
+  }
+}
