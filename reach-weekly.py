@@ -126,7 +126,7 @@ def load_baseline():
 
     # Build portfolio set: from JSON if present, else use hardcoded fallback
     portfolio_set = set()
-  2 if 'portfolio' in baseline_data:
+    if 'portfolio' in baseline_data:
         for cohort_companies in baseline_data['portfolio'].values():
             for name in cohort_companies:
                 portfolio_set.add(normalize_name(name))
