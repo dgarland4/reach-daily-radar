@@ -28,7 +28,9 @@ jobs:
         env:
           NOTION_API_TOKEN: ${{ secrets.NOTION_API_TOKEN }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-        run: python reach-weekly.py 2>&1 | tee reach-summary.txt
+        run: |
+            set -o pipefail
+            python3 reach-weekly.py 2>&1 | tee reach-summary.txt
 
       - name: Commit updated discoveries file
         run: |
