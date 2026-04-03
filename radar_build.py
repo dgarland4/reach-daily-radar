@@ -371,7 +371,27 @@ def build_html(companies):
         '</footer>\n<script>' + JS + '</script>\n</body>\n</html>'
     )
     return html
+def write_discoveries_file(companies):
+    import re as _re
+    def nd(u):
+        if not u: return ""
+        d = _re.sub(r"https?://(www\.)?", "", str(u)).split("/")[0]
+        for t in [".com.br",".co.uk",".com.au",".ai",".io",".com",".app",".co",".tech",".org",".net",".re",".xyz",".ca",".uk",".au"]:
+            if d.endswith(t): d=d[:-len(t)]; break
+        return _re.sub(r"[-_.]","",d).lower()
+    today = datetime.now().strftime("%Y-%m-%d")
+    lines = ["# REACH Daily Radar — Known Companies", f"**Auto-generated from Notion:** {datetime.now().strftime('%B %-d, %Y')}", "", f"## {today}"]
+    for c in companies:
+        n=get_prop(c,"Company Name") or ""; w=get_prop(c,"Website") or ""; r=get_prop(c,"Region") or ""; cat=get_prop(c,"Category") or ""
+        if n: lines.append(f"- **{n}** | {nd(w)} | {r} | {cat}")
+    open("reach-discoveries.md","w").write("\n".join(lines)+"\n")
+    print(f"  wrote reach-discoveries.md ({len(lines)-4} companies)")
+```
 
+6. Then use **Cmd+F** again to find:
+```
+   companies = fetch_all()
+write_discoveries_file(companies)
 print("Fetching from Notion...")
 companies = fetch_all()
 print("Fetched " + str(len(companies)) + " companies")
