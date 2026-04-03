@@ -42,7 +42,7 @@ jobs:
         run: |
           git config user.name "REACH Daily Radar"
           git config user.email "hello@narreach.com"
-          git add index.html
+          git add index.html reach-discoveries.md
           git diff --staged --quiet || git commit -m "${{ github.event.inputs.commit_message || 'chore: daily radar rebuild' }}"
           git push origin main
 
