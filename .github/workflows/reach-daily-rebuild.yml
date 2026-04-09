@@ -1,55 +1,34 @@
-name: REACH Daily Radar — Rebuild & Deploy
+name: Daily Rebuild
 
 on:
   schedule:
-    - cron: '0 15 * * 1-5'  # Mon–Fri 3pm UTC (7am PST / 8am PDT)
-  workflow_dispatch:
-    inputs:
-      date:
-        description: 'Date label (e.g. March 16, 2026)'
-        required: false
-        default: ''
-      commit_message:
-        description: 'Commit message'
-        required: false
-        default: 'REACH Daily Radar update'
+    - cron: '0 12 * * *'  # Runs daily at 12pm UTC
+  workflow_dispatch:  # Allows manual trigger
 
 jobs:
-  rebuild-and-deploy:
+  rebuild:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.REACH_RADAR_TOKEN }}
-          ref: main
-
+      - uses: actions/checkout@v3
+      
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v4
         with:
-          python-version: '3.11'
-
+          python-version: '3.10'
+      
       - name: Install dependencies
-        run: pip install requests
-
-      - name: Rebuild index.html from Notion
-        env:
-          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
-          DATE_LABEL: ${{ github.event.inputs.date }}
-        run: python3 radar_build.py
-
-      - name: Commit and push
         run: |
-          git config user.name "REACH Daily Radar"
-          git config user.email "hello@narreach.com"
-          git add index.html reach-discoveries.md
-          git diff --staged --quiet || git commit -m "${{ github.event.inputs.commit_message || 'chore: daily radar rebuild' }}"
-          git push origin main
-
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.REACH_RADAR_TOKEN }}
-          publish_dir: ./
-          publish_branch: gh-pages
-          commit_message: ${{ github.event.inputs.commit_message }}
+          pip install gspread google-auth
+      
+      - name: Run rebuild script
+        env:
+          GOOGLE_SHEETS_CREDS: ${{ secrets.GOOGLE_SHEETS_CREDS }}
+          SHEET_ID: ${{ secrets.SHEET_ID }}
+        run: python sheets_radar_build.py
+      
+      - name: Commit and push if changed
+        run: |
+          git config --global user.email "action@github.com"
+          git config --global user.name "GitHub Action"
+          git add index.html
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update: $(date)" && git push)
