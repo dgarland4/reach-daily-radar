@@ -18,35 +18,8 @@ gc = gspread.authorize(creds)
 sheet_id = os.environ.get('SHEET_ID')
 sheet = gc.open_by_key(sheet_id).sheet1
 
-# Get all records
-records = sheet.get_all_records()
-
-# Count companies
-company_count = len(records)
-
-# Get latest date
-latest_date = datetime.now().strftime('%B %d, %Y')
-
-# Update index.html
-with open('index.html', 'r') as f:
-    html_content = f.read()
-
-# Replace count and date
-# Replace date (e.g., ">April 2, 2026<")
-    html_content = re.sub(
-        r'(>)[^<]+ \d+, \d{4}(<)',
-        rf'\1{latest_date}\2',
-        html_content
-    )
+# Get all values to count rows (excluding header)
+    all_values = sheet.get_all_values()
     
-    # Replace company count (e.g., ">83 Companies<" and ">83<")
-    html_content = re.sub(
-        r'(>)\d+( Companies<)',
-        rf'\1{company_count}\2',
-        html_content
-    )
-    html_content = re.sub(
-        r'(hero-stat-num">)\d+(<)',
-        rf'\1{company_count}\2',
-        html_content
-    )
+    # Count companies (total rows minus header row)
+    company_count = len(all_values) - 1 if len(all_values) > 1 else 0
