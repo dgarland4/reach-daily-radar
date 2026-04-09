@@ -44,6 +44,7 @@ REGION_ORDER = [
     ('Europe', '\U0001f1ec\U0001f1e7 Europe'),
     ('MENA', '\U0001f1e6\U0001f1ea MENA'),
     ('APAC', '\U0001f1ef APAC'),
+    ('ANZ', '\U0001f1e6\U0001f1fa ANZ'),
     ('Global', '\U0001f310 Global'),
 ]
 
