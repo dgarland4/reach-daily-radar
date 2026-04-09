@@ -140,44 +140,36 @@ for rk, rl in REGION_ORDER:
 region_count = len([r for r, _ in REGION_ORDER if by_region.get(r)])
 category_count = len(categories)
 
-# Read existing index.html as template for CSS/JS
+# Build the new hero-stats block with correct numbers and white labels
+new_hero_stats = f'''<div class="hero-stats">
+<div class="hero-stat"><div class="hero-stat-num">{total_cards}</div><div class="hero-stat-label">Companies Tracked</div></div>
+<div class="hero-stat"><div class="hero-stat-num">{region_count}</div><div class="hero-stat-label">Regions Covered</div></div>
+<div class="hero-stat"><div class="hero-stat-num">{category_count}</div><div class="hero-stat-label">Categories</div></div>
+<div class="hero-stat"><div class="hero-stat-num">{DATE_LABEL}</div><div class="hero-stat-label">Last Updated</div></div>
+</div>'''
+
+# Read existing index.html
 with open('index.html', 'r') as f:
     template = f.read()
 
-# Fix hero-stat-label color to solid white
-template = template.replace(
-    '.hero-stat-label{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.45)}',
-    '.hero-stat-label{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#FFFFFF}'
+# Fix CSS: make hero-stat-label solid white (not semi-transparent)
+template = re.sub(
+    r'\.hero-stat-label\{[^}]+\}',
+    '.hero-stat-label{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#FFFFFF}',
+    template
+)
+
+# Replace the entire hero-stats block
+template = re.sub(
+    r'<div class="hero-stats">.*?</div>\s*</div>\s*</div>\s*</div>',
+    new_hero_stats + '\n</div>\n</div>\n</div>',
+    template,
+    flags=re.DOTALL
 )
 
 # Replace header stats
 template = re.sub(r'<span class="header-date">[^<]+</span>', f'<span class="header-date">{DATE_LABEL}</span>', template)
 template = re.sub(r'<span class="header-pill">[^<]+</span>', f'<span class="header-pill">{total_cards} Companies</span>', template)
-
-# Replace hero stats - Companies Tracked
-template = re.sub(
-    r'<div class="hero-stat-num">[^<]*</div>\s*<div class="hero-stat-label">Companies Tracked</div>',
-    f'<div class="hero-stat-num">{total_cards}</div>\n<div class="hero-stat-label">Companies Tracked</div>',
-    template
-)
-# Replace hero stats - Regions Covered
-template = re.sub(
-    r'<div class="hero-stat-num">[^<]*</div>\s*<div class="hero-stat-label">Regions Covered</div>',
-    f'<div class="hero-stat-num">{region_count}</div>\n<div class="hero-stat-label">Regions Covered</div>',
-    template
-)
-# Replace hero stats - Categories
-template = re.sub(
-    r'<div class="hero-stat-num">[^<]*</div>\s*<div class="hero-stat-label">Categories</div>',
-    f'<div class="hero-stat-num">{category_count}</div>\n<div class="hero-stat-label">Categories</div>',
-    template
-)
-# Replace hero stats - Last Updated (full date)
-template = re.sub(
-    r'<div class="hero-stat-num">[^<]*</div>\s*<div class="hero-stat-label">Last Updated</div>',
-    f'<div class="hero-stat-num">{DATE_LABEL}</div>\n<div class="hero-stat-label">Last Updated</div>',
-    template
-)
 
 # Replace showing count
 template = re.sub(r'Showing \d+ of \d+', f'Showing {total_cards} of {total_cards}', template)
