@@ -3,6 +3,7 @@ from google.oauth2.service_account import Credentials
 import json
 import os
 from datetime import datetime
+import re
 
 # Setup credentials
 creds_json = os.environ.get('GOOGLE_SHEETS_CREDS')
@@ -31,16 +32,21 @@ with open('index.html', 'r') as f:
     html_content = f.read()
 
 # Replace count and date
-html_content = html_content.replace(
-    '<span id="company-count">119</span>',
-    f'<span id="company-count">{company_count}</span>'
-)
-html_content = html_content.replace(
-    '<span id="last-updated">April 2, 2026</span>',
-    f'<span id="last-updated">{latest_date}</span>'
-)
-
-with open('index.html', 'w') as f:
-    f.write(html_content)
-
-print(f"✅ Updated: {company_count} companies as of {latest_date}")
+# Replace date (e.g., ">April 2, 2026<")
+    html_content = re.sub(
+        r'(>)[^<]+ \d+, \d{4}(<)',
+        rf'\1{latest_date}\2',
+        html_content
+    )
+    
+    # Replace company count (e.g., ">83 Companies<" and ">83<")
+    html_content = re.sub(
+        r'(>)\d+( Companies<)',
+        rf'\1{company_count}\2',
+        html_content
+    )
+    html_content = re.sub(
+        r'(hero-stat-num">)\d+(<)',
+        rf'\1{company_count}\2',
+        html_content
+    )
