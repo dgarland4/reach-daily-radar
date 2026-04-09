@@ -19,7 +19,7 @@ sheet_id = os.environ.get('SHEET_ID')
 sheet = gc.open_by_key(sheet_id).sheet1
 
 # Get all values to count rows (excluding headeal
-all_values = sheet.get_all_values()ws minus header row)
+all_values = sheet.get_all_values()ws m
 
 # Count companies (total rows minus header row)
     company_count = len(all_values) - 1 if len(all_values) > 1 else 0
