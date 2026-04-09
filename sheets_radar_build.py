@@ -20,7 +20,6 @@ sheet = gc.open_by_key(sheet_id).sheet1
 all_values = sheet.get_all_values()
 headers = all_values[3]
 rows = all_values[4:]
-
 all_rows = []
 for row in rows:
     record = dict(zip(headers, row))
@@ -122,7 +121,6 @@ for row in all_rows:
     </div>
   </div>
 </div>'''
-
     by_region.setdefault(region, []).append(card)
     total_cards += 1
 
@@ -133,22 +131,11 @@ for rk, rl in REGION_ORDER:
     if not rc:
         continue
     cards_html = '\n'.join(rc)
-    sections += f'''
-<div class="section-divider" data-region="{rk}">
+    sections += f'''<div class="section-divider" data-region="{rk}">
   <div class="section-divider-label">{rl}</div>
   <div class="section-divider-line"></div>
 </div>
-<div class="cards-grid">
-{cards_html}
-</div>
-'''
-
-# Update date label
-try:
-    dt = datetime.strptime(DATE_LABEL, '%B %-d, %Y')
-    short = dt.strftime('%b %-d')
-except:
-    short = DATE_LABEL[:6]
+<div class="cards-grid">{cards_html}</div>'''
 
 region_count = len([r for r, _ in REGION_ORDER if by_region.get(r)])
 category_count = len(categories)
@@ -157,29 +144,49 @@ category_count = len(categories)
 with open('index.html', 'r') as f:
     template = f.read()
 
+# Fix hero-stat-label color to solid white
+template = template.replace(
+    '.hero-stat-label{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.45)}',
+    '.hero-stat-label{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#FFFFFF}'
+)
+
 # Replace header stats
 template = re.sub(r'<span class="header-date">[^<]+</span>', f'<span class="header-date">{DATE_LABEL}</span>', template)
 template = re.sub(r'<span class="header-pill">[^<]+</span>', f'<span class="header-pill">{total_cards} Companies</span>', template)
 
-# Replace hero stats
-template = re.sub(r'<div class="hero-stat-num">[^<]*</div>\s*<div class="hero-stat-label">Companies Tracked</div>',
-    f'<div class="hero-stat-num">{total_cards}</div>\n<div class="hero-stat-label">Companies Tracked</div>', template)
-template = re.sub(r'<div class="hero-stat-num">[^<]*</div>\s*<div class="hero-stat-label">Regions Covered</div>',
-    f'<div class="hero-stat-num">{region_count}</div>\n<div class="hero-stat-label">Regions Covered</div>', template)
-template = re.sub(r'<div class="hero-stat-num">[^<]*</div>\s*<div class="hero-stat-label">Categories</div>',
-    f'<div class="hero-stat-num">{category_count}</div>\n<div class="hero-stat-label">Categories</div>', template)
-template = re.sub(r'<div class="hero-stat-num">[^<]*</div>\s*<div class="hero-stat-label">Last Updated</div>',
-    f'<div class="hero-stat-num">{short}</div>\n<div class="hero-stat-label">Last Updated</div>', template)
+# Replace hero stats - Companies Tracked
+template = re.sub(
+    r'<div class="hero-stat-num">[^<]*</div>\s*<div class="hero-stat-label">Companies Tracked</div>',
+    f'<div class="hero-stat-num">{total_cards}</div>\n<div class="hero-stat-label">Companies Tracked</div>',
+    template
+)
+# Replace hero stats - Regions Covered
+template = re.sub(
+    r'<div class="hero-stat-num">[^<]*</div>\s*<div class="hero-stat-label">Regions Covered</div>',
+    f'<div class="hero-stat-num">{region_count}</div>\n<div class="hero-stat-label">Regions Covered</div>',
+    template
+)
+# Replace hero stats - Categories
+template = re.sub(
+    r'<div class="hero-stat-num">[^<]*</div>\s*<div class="hero-stat-label">Categories</div>',
+    f'<div class="hero-stat-num">{category_count}</div>\n<div class="hero-stat-label">Categories</div>',
+    template
+)
+# Replace hero stats - Last Updated (full date)
+template = re.sub(
+    r'<div class="hero-stat-num">[^<]*</div>\s*<div class="hero-stat-label">Last Updated</div>',
+    f'<div class="hero-stat-num">{DATE_LABEL}</div>\n<div class="hero-stat-label">Last Updated</div>',
+    template
+)
 
 # Replace showing count
 template = re.sub(r'Showing \d+ of \d+', f'Showing {total_cards} of {total_cards}', template)
 
-# Replace all company cards sections (from first section-divider to site-footer)
+# Replace all company cards sections
 sections_pattern = r'(?s)(<div id="list-rows"></div>\s*</div>).*?(<div class="site-footer">)'
 if re.search(sections_pattern, template):
     template = re.sub(sections_pattern, f'\\1\n{sections}\n\\2', template)
 else:
-    # Fallback: replace between main content area markers
     template = re.sub(
         r'(?s)(<div id="cc">[^<]*</div>\s*</div>\s*</div>\s*</div>).*?(<div class="site-footer">)',
         f'\\1\n{sections}\n\\2',
@@ -192,4 +199,4 @@ template = re.sub(r'<title>[^<]+</title>', f'<title>{DATE_LABEL}</title>', templ
 with open('index.html', 'w', encoding='utf-8') as f:
     f.write(template)
 
-print(f'\u2705 Rebuilt Radar: {total_cards} companies across {region_count} regions.')
+print(f'\u2705 Rebuilt Radar: {total_cards} companies, {region_count} regions, {category_count} categories. Date: {DATE_LABEL}')
