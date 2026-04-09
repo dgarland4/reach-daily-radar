@@ -19,7 +19,14 @@ sheet_id = os.environ.get('SHEET_ID')
 sheet = gc.open_by_key(sheet_id).sheet1
 
 # Get all values from sheet (using row 4 as header)
-all_rows = sheet.get_all_records(head=4)
+all_values = sheet.get_all_values()
+headers = all_values[3] 
+rows = all_values[4:]   
+
+all_rows = []
+for row in rows:
+    record = dict(zip(headers, row))
+    all_rows.append(record)
 
 # Process data
 company_count = len(all_rows)
@@ -31,21 +38,21 @@ def clean_id(text):
     return re.sub(r'[^a-z0-9]', '', str(text).lower())
 
 for row in all_rows:
-    name = str(row.get('Company Name', 'Unknown'))
-    if not name or name == 'Unknown': continue
+    name = str(row.get('Company Name', 'Unknown')).strip()
+    if not name or name == 'Unknown' or name == '': continue
     
-    website = str(row.get('Website', '#'))
-    desc = str(row.get('Company Description', ''))
-    cat = str(row.get('Category', 'PropTech'))
-    subcat = str(row.get('Subcategory', ''))
-    region = str(row.get('Region', 'US'))
-    stage = str(row.get('Stage / Round', 'Seed'))
-    source = str(row.get('Source', 'Direct'))
-    date_added = str(row.get('Date Added', ''))
-    why_scv = str(row.get('Why SCV / REACH', ''))
+    website = str(row.get('Website', '#')).strip()
+    desc = str(row.get('Company Description', '')).strip()
+    cat = str(row.get('Category', 'PropTech')).strip()
+    subcat = str(row.get('Subcategory', '')).strip()
+    region = str(row.get('Region', 'US')).strip()
+    stage = str(row.get('Stage / Round', 'Seed')).strip()
+    source = str(row.get('Source', 'Direct')).strip()
+    date_added = str(row.get('Date Added', '')).strip()
+    why_scv = str(row.get('Why SCV / REACH', '')).strip()
     
-    regions.add(region)
-    categories.add(cat)
+    if region: regions.add(region)
+    if cat: categories.add(cat)
     
     clean_url = website.replace('https://', '').replace('http://', '').split('/')[0]
     tags = f"{clean_id(region)} {clean_id(cat)}"
@@ -54,7 +61,7 @@ for row in all_rows:
     <div class="card" data-tags="{tags}" data-date="{date_added}">
         <div class="card-top">
             <div class="card-logo-wrap">
-                <div class="owner-avatar">{name[0] if name else '?'}</div>
+                <div class="owner-avatar" style="background: #1B5BA7; color: white; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-weight: 700;">{name[0] if name else '?'}</div>
             </div>
             <div class="card-identity">
                 <div class="card-name-row">
@@ -63,7 +70,7 @@ for row in all_rows:
                 </div>
                 <div class="card-meta-row">
                     <span class="badge badge-watch">👀 Watch</span>
-                    <span class="tag">{cat}</span>
+                    <span class="badge badge-core">{cat}</span>
                     <span class="tag">{subcat}</span>
                     <span class="tag">{stage}</span>
                 </div>
@@ -104,20 +111,18 @@ template = re.sub(r'<span class="header-date">[^<]+</span>', f'<span class="head
 template = re.sub(r'Today’s Radar — [^<]+', f'Today’s Radar — {latest_date}', template)
 
 # Replace hero stats
-template = re.sub(r'<div class="hero-stat-num">[^<]*</div>(\s*)<div class="hero-stat-label">Companies Tracked</div>', 
-                  f'<div class="hero-stat-num">{company_count}</div>\\1<div class="hero-stat-label">Companies Tracked</div>', template)
-template = re.sub(r'<div class="hero-stat-num">[^<]*</div>(\s*)<div class="hero-stat-label">Regions Covered</div>', 
-                  f'<div class="hero-stat-num">{region_count}</div>\\1<div class="hero-stat-label">Regions Covered</div>', template)
-template = re.sub(r'<div class="hero-stat-num">[^<]*</div>(\s*)<div class="hero-stat-label">Categories</div>', 
-                  f'<div class="hero-stat-num">{category_count}</div>\\1<div class="hero-stat-label">Categories</div>', template)
+template = re.sub(r'<div class="hero-stat-num">[^<]*</div>\s*<div class="hero-stat-label">Companies Tracked</div>', 
+                  f'<div class="hero-stat-num">{company_count}</div><div class="hero-stat-label">Companies Tracked</div>', template)
+template = re.sub(r'<div class="hero-stat-num">[^<]*</div>\s*<div class="hero-stat-label">Regions Covered</div>', 
+                  f'<div class="hero-stat-num">{region_count}</div><div class="hero-stat-label">Regions Covered</div>', template)
+template = re.sub(r'<div class="hero-stat-num">[^<]*</div>\s*<div class="hero-stat-label">Categories</div>', 
+                  f'<div class="hero-stat-num">{category_count}</div><div class="hero-stat-label">Categories</div>', template)
 
 # Replace count display
-template = re.sub(r'<div class="header-pill">[^<]+</div>', f'<div class="header-pill">{company_count} COMPANIES</div>', template)
+template = re.sub(r'<div class="header-pill">[^<]*</div>', f'<div class="header-pill">{company_count} COMPANIES</div>', template)
 template = re.sub(r'<span id="cc">Showing \d+ of \d+</span>', f'<span id="cc">Showing {company_count} of {company_count}</span>', template)
 
 # Robust replacement of cards-grid content
-# This replaces the content between <div class="cards-grid"> and its matching closing </div>
-# Assuming no nested div with class "cards-grid"
 template = re.sub(r'(<div class="cards-grid">)(.*?)(</div>\s*</div>\s*</div>\s*<footer)', 
                   r'\1' + company_cards_html + r'\3', template, flags=re.DOTALL)
 
