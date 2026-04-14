@@ -191,20 +191,15 @@ template = re.sub(r'Showing \d+ of \d+', f'Showing {total_cards} of {total_cards
 sections_pattern = r'(?s)(<div id="list-rows"></div>\s*</div>).*?(<div class="site-footer">)'
 if re.search(sections_pattern, template):
     template = re.sub(sections_pattern, f'\\1\n{sections}\n\\2', template)
-        else:
-                    template = re.sub(sections_pattern, '', template)
+else:
+    template = re.sub(sections_pattern, '', template)
 
 # Build list_rows HTML
 list_rows_html = '\n'.join(list_rows)
 
 # Replace list-rows content
 template = re.sub(r'<div id="list-rows"></div>', f'<div id="list-rows">{list_rows_html}</div>', template)
-else:
-    template = re.sub(
-        r'(?s)(<div id="cc">[^<]*</div>\s*</div>\s*</div>\s*</div>).*?(<div class="site-footer">)',
-        f'\\1\n{sections}\n\\2',
-        template
-    )
+
 
 # Replace title
 template = re.sub(r'<title>[^<]+</title>', f'<title>{DATE_LABEL}</title>', template)
