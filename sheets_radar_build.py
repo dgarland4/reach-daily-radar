@@ -55,6 +55,7 @@ by_region = {r[0]: [] for r in REGION_ORDER}
 regions = set()
 categories = set()
 total_cards = 0
+list_rows = []
 
 for row in all_rows:
     name = str(row.get('Company Name', '')).strip()
@@ -125,6 +126,17 @@ for row in all_rows:
     by_region.setdefault(region, []).append(card)
     total_cards += 1
 
+    # Build list-row HTML for this company
+    list_row = f'''<div class="list-row" data-tags="{tags}" data-date="{date_added}">
+            <div class="list-col list-col-name">{name}</div>
+                    <div class="list-col list-col-category">{cat}</div>
+                            <div class="list-col list-col-stage">{stage}</div>
+                                    <div class="list-col list-col-region">{region}</div>
+                                            <div class="list-col list-col-status">{status}</div>
+                                                    <div class="list-col list-col-website"><a href="{website}" target="_blank">Visit</a></div>
+                                                        </div>'''
+    list_rows.append(list_row)
+
 # Build sections HTML
 sections = ''
 for rk, rl in REGION_ORDER:
@@ -179,6 +191,14 @@ template = re.sub(r'Showing \d+ of \d+', f'Showing {total_cards} of {total_cards
 sections_pattern = r'(?s)(<div id="list-rows"></div>\s*</div>).*?(<div class="site-footer">)'
 if re.search(sections_pattern, template):
     template = re.sub(sections_pattern, f'\\1\n{sections}\n\\2', template)
+        else:
+                    template = re.sub(sections_pattern, '', template)
+
+# Build list_rows HTML
+list_rows_html = '\n'.join(list_rows)
+
+# Replace list-rows content
+template = re.sub(r'<div id="list-rows"></div>', f'<div id="list-rows">{list_rows_html}</div>', template)
 else:
     template = re.sub(
         r'(?s)(<div id="cc">[^<]*</div>\s*</div>\s*</div>\s*</div>).*?(<div class="site-footer">)',
